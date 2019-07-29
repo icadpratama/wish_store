@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:wish_store/pages/home_screen.dart';
-import 'package:wish_store/pages/signup_screen.dart';
+import 'package:wish_store/pages/login_screen.dart';
 
-class LoginScreen extends StatefulWidget {
-  LoginScreen({Key key, this.title}) : super(key: key);
+class SignupScreen extends StatefulWidget {
+  SignupScreen({Key key, this.title}) : super(key: key);
   final String title;
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignupScreenState createState() => _SignupScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignupScreenState extends State<SignupScreen> {
 
   @override
   void initState() {
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         right: 32,
                       ),
                       child: Text(
-                        'Login',
+                        'Register',
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 18
@@ -78,6 +78,38 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.only(top: 62),
               child: Column(
                 children: <Widget>[
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.2,
+                    height: 45,
+                    margin: EdgeInsets.only(top: 32),
+                    padding: EdgeInsets.only(
+                        top: 4, left: 16, right: 16, bottom: 4
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(50)
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 5
+                          )
+                        ]
+                    ),
+                    child: TextField(
+                      cursorColor: Color(0xFFf45d27),
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          icon: Icon(
+                            Icons.person,
+                            color: Colors.grey,
+                          ),
+                          hintText: 'Fullname'
+                      ),
+                    ),
+                  ),
+                  Spacer(),
                   Container(
                     width: MediaQuery.of(context).size.width/1.2,
                     height: 45,
@@ -106,6 +138,37 @@ class _LoginScreenState extends State<LoginScreen> {
                           color: Colors.grey,
                         ),
                         hintText: 'Email',
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                  Container(
+                    width: MediaQuery.of(context).size.width/1.2,
+                    height: 45,
+                    padding: EdgeInsets.only(
+                        top: 4, left: 16, right: 16, bottom: 4
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                            Radius.circular(50)
+                        ),
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 5
+                          )
+                        ]
+                    ),
+                    child: TextField(
+                      cursorColor: Color(0xFFf45d27),
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        icon: Icon(
+                          Icons.phone,
+                          color: Colors.grey,
+                        ),
+                        hintText: 'Phone Number',
                       ),
                     ),
                   ),
@@ -141,47 +204,35 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 16, right: 32
-                      ),
-                      child: Text(
-                        'Forgot Password ?',
-                        style: TextStyle(
-                            color: Colors.grey
+                  Spacer(),
+                  Container(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+                        );
+                      },
+                      child: Container(
+                        height: 45,
+                        width: MediaQuery.of(context).size.width/1.2,
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFFf45d27),
+                                Color(0xFFf5851f),
+                              ],
+                            ),
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(50)
+                            )
                         ),
-                      ),
-                    ),
-                  ),
-                  Spacer(flex: 2,),
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
-                      );
-                    },
-                    child: Container(
-                      height: 45,
-                      width: MediaQuery.of(context).size.width/1.2,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xFFf45d27),
-                              Color(0xFFf5851f),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                              Radius.circular(50)
-                          )
-                      ),
-                      child: Center(
-                        child: Text(
-                          'Login'.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold
+                        child: Center(
+                          child: Text(
+                            'Register'.toUpperCase(),
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold
+                            ),
                           ),
                         ),
                       ),
@@ -192,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Don't have any account? ",
+                        "Already a member? ",
                         style: TextStyle(
                           fontSize: 12.0,
                         ),
@@ -200,16 +251,15 @@ class _LoginScreenState extends State<LoginScreen> {
                       InkWell(
                         onTap: () {
                           Navigator.of(context).push(
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => SignupScreen())
+                            MaterialPageRoute(builder: (BuildContext context) => LoginScreen())
                           );
                         },
                         child: Text(
-                          'Sign Up',
+                          'Login',
                           style: TextStyle(
                               fontSize: 12.0,
                               color: Colors.deepOrange,
-                            fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),

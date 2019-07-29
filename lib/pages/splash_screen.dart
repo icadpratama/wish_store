@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:wish_store/utils/wishstore.dart';
 import 'package:wish_store/utils/my_navigator.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -53,14 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 10.0),
                       ),
-                      Text(
-                        Wishstore.name,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 24.0
-                        ),
-                      )
                     ],
                   ),
                 ),

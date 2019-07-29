@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:wish_store/pages/splash_screen.dart';
 import 'package:wish_store/pages/login_screen.dart';
-import 'package:wish_store/pages/home_screen.dart';
 
 var routes = <String, WidgetBuilder>{
-  "/home": (BuildContext context) => HomeScreen(),
   "/login": (BuildContext context) => LoginScreen(),
 };
 
