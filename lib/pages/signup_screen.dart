@@ -75,7 +75,7 @@ class _SignupScreenState extends State<SignupScreen> {
             Container(
               height: MediaQuery.of(context).size.height/2,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: 62),
+              padding: EdgeInsets.only(top: 10),
               child: Column(
                 children: <Widget>[
                   Container(
@@ -204,7 +204,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     ),
                   ),
-                  Spacer(),
+                  Spacer(flex: 4,),
                   Container(
                     child: InkWell(
                       onTap: () {

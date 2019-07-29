@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Container(
               height: MediaQuery.of(context).size.height/2,
               width: MediaQuery.of(context).size.width,
-              padding: EdgeInsets.only(top: 62),
+              padding: EdgeInsets.only(top: 44),
               child: Column(
                 children: <Widget>[
                   Container(
