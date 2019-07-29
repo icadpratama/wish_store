@@ -22,6 +22,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       body: Container(
         child: Column(
           children: <Widget>[
@@ -161,6 +162,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         ]
                     ),
                     child: TextField(
+                      keyboardType: TextInputType.phone,
                       cursorColor: Color(0xFFf45d27),
                       decoration: InputDecoration(
                         border: InputBorder.none,
