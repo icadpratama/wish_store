@@ -21,10 +21,12 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
       appBar: PreferredSize(
                 child: AppBar(
                     elevation: 0.0,
-                    title: Text(""),
-                    centerTitle: true,
+                    actions: <Widget>[
+                      new IconButton(icon: new Icon(Icons.search),
+                        onPressed: (){},
+                      ),
+                    ],
                     automaticallyImplyLeading: false,
-
                   ),
                   preferredSize: Size(
                       MediaQuery.of(context).size.width, 60.0
@@ -34,57 +36,6 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
           padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
         child: ListView(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0),
-                  child: Card(
-                    elevation: 6.0,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
-                        ),
-                      ),
-                      child: TextField(
-                        style: TextStyle(
-                            fontSize: 15.0,
-                            color: Colors.black
-                        ),
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(10.0),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(5.0),
-                              borderSide: BorderSide(color: Colors.white)
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.circular(5.0)
-                          ),
-                          hintText: "Search...",
-                          prefixIcon: Icon(
-                            Icons.search,
-                            color: Colors.black,
-                          ),
-                          suffixIcon: Icon(
-                              Icons.filter_list,
-                              color: Colors.black
-                          ),
-                          hintStyle: TextStyle(
-                              fontSize: 15.0,
-                              color: Colors.black
-                          ),
-                        ),
-                        maxLines: 1,
-                        controller: _searchControl,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
