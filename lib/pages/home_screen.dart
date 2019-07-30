@@ -1,127 +1,284 @@
 import 'package:flutter/material.dart';
-import 'package:wish_store/utils/wishstore.dart';
+import 'package:wish_store/pages/trending_screen.dart';
+import 'package:wish_store/utils/wishlist.dart';
+import 'package:wish_store/widgets/slide_item.dart';
+import 'package:wish_store/utils/categories.dart';
+import 'package:wish_store/utils/friends.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
   _HomeScreenState createState() => new _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  AnimationController animCtrl;
-  Animation<double> animation;
-
-  AnimationController animCtrl2;
-  Animation<double> animation2;
-
-  bool showFirst = true;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Animation init
-    animCtrl = new AnimationController(
-        duration: new Duration(milliseconds: 500), vsync: this);
-    animation = new CurvedAnimation(parent: animCtrl, curve: Curves.easeOut);
-    animation.addListener(() {
-      this.setState(() {});
-    });
-    animation.addStatusListener((AnimationStatus status) {});
-
-    animCtrl2 = new AnimationController(
-        duration: new Duration(milliseconds: 1000), vsync: this);
-    animation2 = new CurvedAnimation(parent: animCtrl2, curve: Curves.easeOut);
-    animation2.addListener(() {
-      this.setState(() {});
-    });
-    animation2.addStatusListener((AnimationStatus status) {});
-  }
-
-  @override
-  void dispose() {
-    animCtrl.dispose();
-    super.dispose();
-  }
+class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
+  final TextEditingController _searchControl = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
+
     return Scaffold(
-      appBar: AppBar(
-        title: Text(Wishstore.name),
-        actions: <Widget>[
-          Padding(
-            child: Icon(Icons.search),
-            padding: const EdgeInsets.only(right: 10.0),
-          )
-        ],
+      appBar: PreferredSize(
+                child: AppBar(
+                    elevation: 0.0,
+                    title: Text(""),
+                    centerTitle: true,
+                    automaticallyImplyLeading: false,
+
+                  ),
+                  preferredSize: Size(
+                      MediaQuery.of(context).size.width, 60.0
+                  ),
       ),
-      drawer: Drawer(),
-      body: new Center(
-          child: new Stack(
-            children: <Widget>[
-              new Center(
-                child: new DragTarget(onWillAccept: (_) {
-                  print('red');
-                  return true;
-                }, onAccept: (_) {
-                  setState(() => showFirst = false);
-                  animCtrl.forward();
-                  animCtrl2.forward();
-                }, builder: (_, _1, _2) {
-                  return new SizedBox.expand(
-                    child: new Container(color: Color(0xFFFF5722)),
-                  );
-                }),
-              ),
-              new Center(
-                child: new DragTarget(onWillAccept: (_) {
-                  print('green');
-                  return true;
-                }, builder: (_, _1, _2) {
-                  return new SizedBox.fromSize(
-                    size: new Size(350.0, 350.0),
-                    child: new Container(color: Colors.green),
-                  );
-                }),
-              ),
-              new Stack(alignment: FractionalOffset.center, children: <Widget>[
-                new Align(
-                  alignment: new Alignment(0.0, 0.5 - animation.value * 0.15),
-                  child: new CardView(200.0 + animation.value * 60),
+      body: Padding(
+          padding: EdgeInsets.fromLTRB(10.0, 0.0, 10.0, 0.0),
+        child: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 0.0, left: 0.0, right: 0.0),
+                  child: Card(
+                    elevation: 6.0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                      ),
+                      child: TextField(
+                        style: TextStyle(
+                            fontSize: 15.0,
+                            color: Colors.black
+                        ),
+                        decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(10.0),
+                          border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                              borderSide: BorderSide(color: Colors.white)
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(5.0)
+                          ),
+                          hintText: "Search...",
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: Colors.black,
+                          ),
+                          suffixIcon: Icon(
+                              Icons.filter_list,
+                              color: Colors.black
+                          ),
+                          hintStyle: TextStyle(
+                              fontSize: 15.0,
+                              color: Colors.black
+                          ),
+                        ),
+                        maxLines: 1,
+                        controller: _searchControl,
+                      ),
+                    ),
+                  ),
                 ),
-                new Align(
-                    alignment: new Alignment(0.0, 0.35 - animation2.value * 0.35),
-                    child: new InkWell(
-                      onTap: () => Navigator.of(context).push(
-                          new MaterialPageRoute(builder: (_) => new HomeScreen())),
-                      child: new CardView(260.0 + animation2.value * 80),
-                    )),
-                new Draggable(
-                  feedback: new CardView(340.0),
-                  child: showFirst ? new CardView(340.0) : new Container(),
-                  childWhenDragging: new Container(),
+              ],
+            ),
+            SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Trending Wishes",
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w800
+                  ),
+                ),
+                FlatButton(
+                  child: Text(
+                    "See all (43)",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (BuildContext context) {
+                          return TrendingScreen();
+                        },
+                        ),
+                    );
+                  },
                 )
-              ]),
-            ],
-          )),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.amber,
-        onPressed: () => {},
-        child: Icon(Icons.shopping_cart, color: Colors.white),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              height: MediaQuery.of(context).size.height/2.4,
+              width: MediaQuery.of(context).size.width,
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: restaurants == null ? 0 : restaurants.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map restaurant = restaurants[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: SlideItem(
+                      img: restaurant["img"],
+                      title: restaurant["title"],
+                      address: restaurant["address"],
+                      rating: restaurant["rating"],
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 10.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Category",
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+                FlatButton(
+                  child: Text(
+                    "See all (9)",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                    ),
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              height: MediaQuery.of(context).size.height/6,
+              child: ListView.builder(
+                primary: false,
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemCount: categories == null ? 0: categories.length,
+                itemBuilder: (BuildContext context, int index) {
+                  Map cat = categories[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(right: 10.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            cat["img"],
+                            height: MediaQuery.of(context).size.height/6,
+                            width: MediaQuery.of(context).size.width/6,
+                            fit: BoxFit.cover,
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                stops: [0.2,0.7],
+                                colors: [
+                                  cat['color1'],
+                                  cat['color2']
+                                ],
+                              ),
+                            ),
+                            height: MediaQuery.of(context).size.height/6,
+                            width: MediaQuery.of(context).size.width/6,
+                          ),
+                          Center(
+                            child: Container(
+                              height: MediaQuery.of(context).size.height/6,
+                              width: MediaQuery.of(context).size.width/6,
+                              padding: EdgeInsets.all(1),
+                              constraints: BoxConstraints(
+                                minWidth: 20,
+                                minHeight: 20
+                              ),
+                              child: Center(
+                                child: Text(
+                                  cat["name"],
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+
+                },
+              ),
+            ),
+            SizedBox(height: 20.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Text(
+                  "Friends",
+                  style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w800
+                  ),
+                ),
+                FlatButton(
+                  child: Text(
+                    "See all (59)",
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor
+                    ),
+                  ),
+                  onPressed: () {},
+                )
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Container(
+              height: 50.0,
+              child: ListView.builder(
+                primary: false,
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: friends == null ? 0 : friends.length,
+                itemBuilder: (BuildContext context, int index) {
+                  String img = friends[index];
+
+                  return Padding(
+                    padding: EdgeInsets.only(right: 5.0),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(
+                        img
+                      ),
+                      radius: 25.0,
+                    ),
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 30.0),
+          ],
+        ),
       ),
     );
   }
-}
-
-class CardView extends StatelessWidget {
-  final double cardSize;
-  CardView(this.cardSize);
 
   @override
-  Widget build(BuildContext context) {
-    return new Card(
-        child: new SizedBox.fromSize(
-          size: new Size(cardSize, cardSize),
-        ));
-  }
+  bool get wantKeepAlive => true;
 }

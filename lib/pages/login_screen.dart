@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:wish_store/pages/home_screen.dart';
+import 'package:wish_store/pages/main_screen.dart';
 import 'package:wish_store/pages/signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   InkWell(
                     onTap: () {
                       Navigator.of(context).push(
-                        MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+                        MaterialPageRoute(builder: (BuildContext context) => MainScreen())
                       );
                     },
                     child: Container(
